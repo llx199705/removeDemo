@@ -1,0 +1,51 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class Demo2 {
+    public static void main(String[] args) {
+        String input = "abcccbad";
+        String output = replaceConsecutiveCharacters(input);
+        System.out.println(output);
+    }
+
+    public static String replaceConsecutiveCharacters(String s) {
+        List<Character> charList = new ArrayList<>();
+        for (char c : s.toCharArray()) {
+            charList.add(c);
+        }
+
+        boolean found;
+        do {
+            found = false;
+            List<Character> newList = new ArrayList<>();
+            int i = 0;
+
+            while (i < charList.size()) {
+                int count = 1;
+                while (i + count < charList.size() && charList.get(i).equals(charList.get(i + count))) {
+                    count++;
+                }
+
+                if (count >= 3) {
+                    found = true;
+                    char previousChar = (char) (charList.get(i) - 1);
+                    newList.add(previousChar);
+                    i += count;
+                } else {
+                    for (int j = 0; j < count; j++) {
+                        newList.add(charList.get(i + j));
+                    }
+                    i += count;
+                }
+            }
+            charList = newList;
+        } while (found);
+
+        StringBuilder result = new StringBuilder();
+        for (char c : charList) {
+            result.append(c);
+        }
+        return result.toString();
+    }
+}
+
